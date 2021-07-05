@@ -1,0 +1,24 @@
+.article {
+	display: flex;
+	margin: 15px 0px;
+
+	&__img-wrapper {
+		flex: 1 1 auto;
+		width: 33.33333%;
+	}
+
+	&__content-wrapper {
+		flex: 1 1 auto;
+		width: 66.6666%;
+		padding: 0px 0px 0px 30px;
+	}
+
+	&__title {
+		font-size: 26px;
+		font-weight: bold;
+	}
+
+	&__text {
+		font-size: 16px;
+	}
+}
