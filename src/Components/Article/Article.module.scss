@@ -21,4 +21,12 @@
 	&__text {
 		font-size: 16px;
 	}
+
+	&__genre {
+		font-weight: bold;
+
+		span {
+			font-weight: normal;
+		}
+	}
 }
