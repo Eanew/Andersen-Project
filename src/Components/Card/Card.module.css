@@ -1,0 +1,154 @@
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 450px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+@media screen and (min-width: 768px) {
+  .card:hover {
+    -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+  .card:hover img {
+    -webkit-transform: scale(1.25);
+            transform: scale(1.25);
+  }
+  .card:hover .card__contentWrapper {
+    bottom: 0;
+  }
+}
+
+.card__img {
+  height: 100%;
+}
+
+.card__img img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.card__contentWrapper {
+  position: absolute;
+  bottom: -50%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  height: 300px;
+  padding: 20px 30px;
+  background-color: rgba(0, 0, 0, 0.85);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  color: white;
+  line-height: 1;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+@media screen and (max-width: 768px) {
+  .card__contentWrapper {
+    bottom: 0;
+  }
+}
+
+.card__title {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 20px;
+  padding: 10px;
+  color: white;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.card__moreTitle {
+  margin: 0px 0px 20px 0px;
+}
+
+.card__text {
+  color: #5f5e5e;
+  padding: 0px 0px 10px 0px;
+  margin: 0px 0px 30px 0px;
+}
+
+.card__btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 40px;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #2d0dbb;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  -webkit-transition: background-color 0.2s ease 0s;
+  transition: background-color 0.2s ease 0s;
+  padding: 0px 20px;
+  margin: 0px 0px 20px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .card__btn:hover {
+    background-color: #3c49ff;
+    color: #fff;
+  }
+}
+
+.card__favorite {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 40px;
+  height: 40px;
+  fill: red;
+  z-index: 2;
+  background-color: #fff;
+  border-bottom-left-radius: 50px;
+  padding: 4px 4px 4px 13px;
+}
+
+.card__favorite svg {
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+@media screen and (min-width: 768px) {
+  .card__favorite:hover svg {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
+.red {
+  background-color: red;
+}
+/*# sourceMappingURL=Card.module.css.map */
