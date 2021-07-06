@@ -29,7 +29,7 @@ const parseMovie = (movie) => ({
     },
 })
 
-const parseMovies = (movies, genresList) => movies.map(movie => parseMovie(movie, genresList))
+const parseMovies = (movies) => movies.map(parseMovie)
 
 const getGenresByIds = (genresList, ids) => ids.map(id => genresList[id])
 
