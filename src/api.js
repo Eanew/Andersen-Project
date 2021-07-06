@@ -17,7 +17,7 @@ const Language = {
     ENG: `en-US`,
 }
 
-const fetchMovies = (category = MovieCategory.POPULAR, language = Language.ENG, page = `1`) => {
+const fetchMovies = ({ category = MovieCategory.POPULAR, language = Language.ENG, page = 1 }) => {
     const path = `${RootPath.MOVIES}/${category}?api_key=${API_KEY}&language=${language}&page=${page}`
 
     return fetch(path)
@@ -47,3 +47,6 @@ export {
     fetchGenresList,
     getImgPath,
 }
+
+// TODO: Реализовать функцию для запроса фильмов по названию
+// Шаблон: https://api.themoviedb.org/3/search/movie?api_key=0a25fd4d6065b2bbe06846e90fdd51f9&query=A
