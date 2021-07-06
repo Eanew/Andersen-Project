@@ -19,7 +19,6 @@ const Language = {
 
 const fetchMovies = ({ category = MovieCategory.POPULAR, language = Language.ENG, page = 1 }) => {
     const path = `${RootPath.MOVIES}/${category}?api_key=${API_KEY}&language=${language}&page=${page}`
-    console.log(`fetching`)
 
     return fetch(path)
         .then(response => response.json())
