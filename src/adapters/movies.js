@@ -9,12 +9,11 @@ const parseReleaseDate = (releaseDate) => new Date(Date.parse(releaseDate))
         day: `numeric`,
     })
 
-const parseMovie = (movie) => ({
+const parseMovieCard = (movie) => ({
     id: String(movie[`id`]),
     title: movie[`title`],
     adult: movie[`adult`],
     release: parseReleaseDate(movie[`release_date`]),
-    genreIds: movie[`genre_ids`],
     originalLanguage: movie[`original_language`],
     overview: movie[`overview`],
 
@@ -24,17 +23,22 @@ const parseMovie = (movie) => ({
     },
 
     image: {
-        poster: getImgPath(movie[`poster_path`]),
-        background: getImgPath(movie[`backdrop_path`]),
+        poster: getImgPath(movie[`poster_path`] || movie[`belongs_to_collection`][`poster_path`]),
+        background: getImgPath(movie[`backdrop_path`] || movie[`belongs_to_collection`][`backdrop_path`]),
     },
+    
+    genreIds: movie[`genre_ids`] || movie[`genres`].map(genre => genre.id),
+    genres: movie[`genres`] ? movie[`genres`].map(genre => genre.name) : null,
+    status: movie[`status`] || null,
+    runtime: movie[`runtime`] || movie[`runtime`] === 0 ? `Not known` : null,
 })
 
-const parseMovies = (movies) => movies.map(parseMovie)
+const parseMovies = (movies) => movies.map(parseMovieCard)
 
 const getGenresByIds = (genresList, ids) => ids.map(id => genresList[id])
 
 export {
-    parseMovie,
+    parseMovieCard,
     parseMovies,
     getGenresByIds,
 }
