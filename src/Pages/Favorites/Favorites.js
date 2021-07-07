@@ -42,7 +42,7 @@ function Main(props) {
 	return (
 		<>
 			<Container>
-				<h1>Избранное</h1>
+				<h1>My favorites</h1>
 				<Row className="my-5">
 					{cards.map((item, idx) => (
 						<Col md={6} lg={4} xl={3} className="mb-4">
@@ -52,6 +52,7 @@ function Main(props) {
 								text={item.overview}
 								buttonLink={item.buttonLink}
 								isFavorite={item.isFavorite}
+								id={item.id}
 							/>
 						</Col>
 					))}

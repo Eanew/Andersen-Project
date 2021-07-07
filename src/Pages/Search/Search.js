@@ -59,6 +59,7 @@ function Main(props) {
 								text={item.overview}
 								buttonLink={item.buttonLink}
 								isFavorite={item.isFavorite}
+								id={item.id}
 							/>
 						</Col>
 					))}

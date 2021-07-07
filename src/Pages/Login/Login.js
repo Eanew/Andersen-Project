@@ -23,7 +23,7 @@ function Login(props) {
 							</Form.Group>
 
 							<Button variant="primary" type="submit">
-								Войти
+								LogIn
 							</Button>
 						</Form>
 					</Col>
