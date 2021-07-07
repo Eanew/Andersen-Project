@@ -8,10 +8,7 @@ function Article(props) {
 			</div>
 			<div className={styles["article__content-wrapper"]}>
 				<h2 className={styles["article__title"]}>{props.title}</h2>
-				<p className={styles["article__text"]}>{props.text}</p>
-				<p className={styles["article__genre"]}>
-					Жанр: <span>{props.genre}</span>
-				</p>
+				<h2 className={styles["article__text"]}>{props.text}</h2>
 			</div>
 		</div>
 	);

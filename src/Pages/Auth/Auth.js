@@ -10,7 +10,7 @@ function Login(props) {
 			<Container>
 				<Row>
 					<Col md={6}>
-						<h2 className="my-4">Authorization</h2>
+						<h2 className="my-4">Registration</h2>
 						<Form>
 							<Form.Group controlId="formBasicLogin" className="mb-3">
 								<Form.Label>Your login</Form.Label>
@@ -23,7 +23,7 @@ function Login(props) {
 							</Form.Group>
 
 							<Button variant="primary" type="submit">
-								Войти
+								Registration
 							</Button>
 						</Form>
 					</Col>

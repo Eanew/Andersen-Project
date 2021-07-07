@@ -2,6 +2,8 @@ import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 // import classNames from "classnames/bind";
 
+import { withRouter } from "react-router-dom";
+
 function Card(props) {
 	let isFavorite = props.isFavorite;
 
@@ -16,9 +18,14 @@ function Card(props) {
 			<div className={styles.card__contentWrapper}>
 				<h3 className={styles.card__moreTitle}>More info</h3>
 				<p className={styles.card__text}>{props.text}</p>
-				<a href={props.buttonLink} className={styles.card__btn}>
+
+				<button
+					type="button"
+					className={styles.card__btn}
+					onClick={() => props.history.push("film/" + props.id)}
+				>
 					Подробнее
-				</a>
+				</button>
 
 				<btn type="button" className={styles.card__favorite}>
 					{/* 1st ico */}
@@ -72,7 +79,7 @@ c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.7
 	);
 }
 
-export default Card;
+export default withRouter(Card);
 
 Card.propTypes = {
 	link: PropTypes.string,

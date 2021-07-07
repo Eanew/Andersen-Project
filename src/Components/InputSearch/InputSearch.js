@@ -9,11 +9,11 @@ function InputSearch(props) {
 		<>
 			<Form>
 				<Form.Group controlId="formBasicEmail" className="mb-3">
-					<Form.Label>Введите название фильма</Form.Label>
-					<Form.Control type="email" placeholder="Название фильма" />
+					<Form.Label>Type film title</Form.Label>
+					<Form.Control type="text" placeholder="Film title" />
 				</Form.Group>
 				<Button variant="primary" type="submit">
-					Искать
+					Search
 				</Button>
 			</Form>
 		</>
