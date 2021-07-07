@@ -1,10 +1,15 @@
+import { parseMovieCard, parseMovies } from "./adapters/movies.js"
+import { parseGenres } from "./adapters/genres.js"
+
+import { Register } from "./util.js"
+
 const API_KEY = `0a25fd4d6065b2bbe06846e90fdd51f9`
 
 const RootPath = {
-    MOVIES: `https://api.themoviedb.org/3/movie`,
+    MOVIE: `https://api.themoviedb.org/3/movie`,
     SEARCH: `https://api.themoviedb.org/3/search/movie`,
-    GENRES: `https://api.themoviedb.org/3/genre/movie/list`,
-    IMAGES: `https://image.tmdb.org/t/p/original`,
+    GENRE: `https://api.themoviedb.org/3/genre/movie/list`,
+    IMAGE: `https://image.tmdb.org/t/p/original`,
 }
 
 const MovieCategory = {
@@ -14,47 +19,50 @@ const MovieCategory = {
     UPCOMING: `upcoming`,
 }
 
-const Language = {
-    ENG: `en-US`,
+const QueryOptionsSymbol = {
+    INIT: `?`,
+    ASSIGN: `=`,
+    SEPARATOR: `&`,
 }
 
-const fetchMovies = ({ category = MovieCategory.POPULAR, language = Language.ENG, page = 1 }) => {
-    const path = `${RootPath.MOVIES}/${category}?api_key=${API_KEY}&language=${language}&page=${page}`
+const getQueryOptionsString = (options) => {
+    const { INIT, ASSIGN, SEPARATOR } = QueryOptionsSymbol
 
-    return fetch(path)
-        .then(response => response.json())
-        .then(data => data.results)
+    return INIT + Object.entries(options)
+        .map(([key, value]) => Register.camelToKebab(key) + ASSIGN + value)
+        .join(SEPARATOR)
 }
 
-const searchMovies = (query) => {
-    const path = `${RootPath.SEARCH}/?api_key=${API_KEY}&query=${query}`
+const load = {
+    movieById: ({ options, id }) => {
+        return fetch(`${RootPath.MOVIE}/${id}${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+            .then(response => response.json())
+            .then(data => parseMovieCard(data))
+    },
     
-    return fetch(path)
-        .then(response => response.json())
-        .then(data => data.results)
+    moviesByCategory: ({ options, category = MovieCategory.POPULAR }) => {
+        return fetch(`${RootPath.MOVIE}/${category}${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+            .then(response => response.json())
+            .then(data => parseMovies(data.results))
+    },
+
+    moviesByTitle: ({ options }) => {
+        return fetch(`${RootPath.SEARCH}/${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+            .then(response => response.json())
+            .then(data => parseMovies(data.results))
+    },
+
+    genresList: ({ options }) => {
+        return fetch(`${RootPath.GENRE}/${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+            .then(response => response.json())
+            .then(data => parseGenres(data.genres))
+    },
 }
-
-const assignGenresIds = (genres) => genres.reduce((genreById, genre) => {
-    genreById[genre.id] = genre.name
-
-    return genreById
-}, {})
-
-const fetchGenresList = (language = Language.ENG) => {
-    const path = `${RootPath.GENRES}?api_key=${API_KEY}&language=${language}`
-
-    return fetch(path)
-        .then(response => response.json())
-        .then(data => assignGenresIds(data.genres))
-}
-
-const getImgPath = (url) => `${RootPath.IMAGES}${url}`
 
 export {
+    RootPath,
     MovieCategory,
-    Language,
-    fetchMovies,
-    searchMovies,
-    fetchGenresList,
-    getImgPath,
+    load,
 }
+
+export default load
