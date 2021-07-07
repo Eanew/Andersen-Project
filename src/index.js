@@ -7,6 +7,7 @@ import { Operation, OperationType as Type } from "./reducers/data/slice.js"
 import { MovieCategory } from "./api.js"
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from "react-router-dom";
 
 store.dispatch(Operation[Type.LOAD_MOVIES_BY_CATEGORY]({ category: MovieCategory.POPULAR }))
 store.dispatch(Operation[Type.LOAD_GENRES_LIST]())
