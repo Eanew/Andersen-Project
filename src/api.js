@@ -1,9 +1,15 @@
+import { parseMovieCard, parseMovies } from "./adapters/movies.js"
+import { parseGenres } from "./adapters/genres.js"
+
+import { Register } from "./util.js"
+
 const API_KEY = `0a25fd4d6065b2bbe06846e90fdd51f9`
 
 const RootPath = {
-    MOVIES: `https://api.themoviedb.org/3/movie`,
-    GENRES: `https://api.themoviedb.org/3/genre/movie/list`,
-    IMAGES: `https://image.tmdb.org/t/p/original`,
+    MOVIE: `https://api.themoviedb.org/3/movie`,
+    SEARCH: `https://api.themoviedb.org/3/search/movie`,
+    GENRE: `https://api.themoviedb.org/3/genre/movie/list`,
+    IMAGE: `https://image.tmdb.org/t/p/original`,
 }
 
 const MovieCategory = {
@@ -13,40 +19,44 @@ const MovieCategory = {
     UPCOMING: `upcoming`,
 }
 
-const Language = {
-    ENG: `en-US`,
+const QueryOptionsSymbol = {
+    INIT: `?`,
+    ASSIGN: `=`,
+    SEPARATOR: `&`,
 }
 
-const fetchMovies = ({ category = MovieCategory.POPULAR, language = Language.ENG, page = 1 }) => {
-    const path = `${RootPath.MOVIES}/${category}?api_key=${API_KEY}&language=${language}&page=${page}`
+const getQueryOptionsString = (options) => {
+    const { INIT, ASSIGN, SEPARATOR } = QueryOptionsSymbol
 
-    return fetch(path)
-        .then(response => response.json())
-        .then(data => data.results)
+    return INIT + Object.entries(options)
+        .map(([key, value]) => Register.camelToKebab(key) + ASSIGN + value)
+        .join(SEPARATOR)
 }
 
-const assignGenresIds = (genres) => genres.reduce((genreById, genre) => {
-    genreById[genre.id] = genre.name
-    return genreById
-}, {})
+const load = {
+    movieById: (parameters = {}) => fetch(
+        `${RootPath.MOVIE}/${parameters.id}` + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
+            .then(response => response.json())
+            .then(data => parseMovieCard(data)),
+    
+    moviesByCategory: (parameters = { category: MovieCategory.POPULAR }) => fetch(
+        `${RootPath.MOVIE}/${parameters.category}` + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
+            .then(response => response.json())
+            .then(data => parseMovies(data.results)),
 
-const fetchGenresList = (language = Language.ENG) => {
-    const path = `${RootPath.GENRES}?api_key=${API_KEY}&language=${language}`
+    moviesByTitle: (parameters = {}) => fetch(
+        RootPath.SEARCH + getQueryOptionsString({ apiKey: API_KEY, query: parameters.title, ...parameters.options }))
+            .then(response => response.json())
+            .then(data => parseMovies(data.results)),
 
-    return fetch(path)
-        .then(response => response.json())
-        .then(data => assignGenresIds(data.genres))
+    genresList: (parameters = {}) => fetch(
+        RootPath.GENRE + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
+            .then(response => response.json())
+            .then(data => parseGenres(data.genres)),
 }
-
-const getImgPath = (url) => `${RootPath.IMAGES}${url}`
 
 export {
+    RootPath,
     MovieCategory,
-    Language,
-    fetchMovies,
-    fetchGenresList,
-    getImgPath,
+    load,
 }
-
-// TODO: Реализовать функцию для запроса фильмов по названию
-// Шаблон: https://api.themoviedb.org/3/search/movie?api_key=0a25fd4d6065b2bbe06846e90fdd51f9&query=A
