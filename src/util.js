@@ -1,3 +1,7 @@
+const Time = {
+    HOUR_IN_MINUTES: 60,
+}
+
 const Char = {
     LOW_DASH: `_`,
 }
@@ -16,6 +20,7 @@ const Register = {
 }
 
 export {
+    Time,
     Char,
     Register,
 }

@@ -1,32 +1,48 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { fetchMovies, fetchGenresList } from "../../api.js"
+import { load } from "../../api.js"
 
 const SLICE_NAME = `data`
 
 const OperationType = {
-    FETCH_MOVIES: `fetchMovies`,
-    FETCH_GENRES_LIST: `fetchGenresList`,
+    LOAD_MOVIE_BY_ID: `loadMovieById`,
+    LOAD_MOVIES_BY_CATEGORY: `loadMoviesByCategory`,
+    LOAD_MOVIES_BY_TITLE: `loadMoviesByTitle`,
+    LOAD_GENRES_LIST: `loadGenresList`,
 }
 
 const Operation = {
-    [OperationType.FETCH_MOVIES]: createAsyncThunk(
-        `${SLICE_NAME}/${OperationType.FETCH_MOVIES}`,
-        fetchMovies
+    [OperationType.LOAD_MOVIE_BY_ID]: createAsyncThunk(
+        `${SLICE_NAME}/${OperationType.LOAD_MOVIE_BY_ID}`,
+        load.movieById
     ),
 
-    [OperationType.FETCH_GENRES_LIST]: createAsyncThunk(
-        `${SLICE_NAME}/${OperationType.FETCH_GENRES_LIST}`,
-        fetchGenresList
+    [OperationType.LOAD_MOVIES_BY_CATEGORY]: createAsyncThunk(
+        `${SLICE_NAME}/${OperationType.LOAD_MOVIES_BY_CATEGORY}`,
+        load.moviesByCategory
+    ),
+    
+    [OperationType.LOAD_MOVIES_BY_TITLE]: createAsyncThunk(
+        `${SLICE_NAME}/${OperationType.LOAD_MOVIES_BY_TITLE}`,
+        load.moviesByTitle
+    ),
+
+    [OperationType.LOAD_GENRES_LIST]: createAsyncThunk(
+        `${SLICE_NAME}/${OperationType.LOAD_GENRES_LIST}`,
+        load.genresList
     ),
 }
 
 const initialState = {
-    movies: null,
+    movieById: null,
+    moviesByCategory: null,
+    moviesByTitle: null,
     genresList: null,
 }
 
 const Selector = {
-    movies: (state) => state[SLICE_NAME].movies,
+    movieById: (state) => state[SLICE_NAME].movieById,
+    moviesByCategory: (state) => state[SLICE_NAME].moviesByCategory,
+    moviesByTitle: (state) => state[SLICE_NAME].moviesByTitle,
     genresList: (state) => state[SLICE_NAME].genresList,
 }
 
@@ -35,11 +51,29 @@ const dataSlice = createSlice({
     initialState,
 
     extraReducers: (builder) => builder
-        .addCase(Operation.fetchMovies.fulfilled, (state, action) => { state.movies = action.payload })
-        .addCase(Operation.fetchGenresList.fulfilled, (state, action) => { state.genresList = action.payload })
+        .addCase(
+            Operation.loadMovieById.fulfilled,
+            (state, action) => { state.movieById = action.payload }
+        )
+
+        .addCase(
+            Operation.loadMoviesByCategory.fulfilled,
+            (state, action) => { state.moviesByCategory = action.payload }
+        )
+        
+        .addCase(
+            Operation.loadMoviesByTitle.fulfilled,
+            (state, action) => { state.moviesByTitle = action.payload }
+        )
+
+        .addCase(
+            Operation.loadGenresList.fulfilled,
+            (state, action) => { state.genresList = action.payload }
+        )
 })
 
 export {
+    OperationType,
     Operation,
     Selector,
 }

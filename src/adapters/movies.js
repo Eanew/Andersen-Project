@@ -1,6 +1,10 @@
 import { RootPath } from "../api.js"
 
+import { Time } from "../util.js"
+
 const DATE_STRING_LANGUAGE = `en-US`
+
+const getImagePath = (url) => url ? RootPath.IMAGE + url : null
 
 const parseReleaseDate = (releaseDate) => new Date(Date.parse(releaseDate))
     .toLocaleString(DATE_STRING_LANGUAGE, {
@@ -8,6 +12,19 @@ const parseReleaseDate = (releaseDate) => new Date(Date.parse(releaseDate))
         month: `long`,
         day: `numeric`,
     })
+
+const parseRuntime = (minutesAmount) => {
+    if (minutesAmount === 0) return `Not known`
+    if (!minutesAmount) return null
+
+    const hours = Math.floor(minutesAmount / Time.HOUR_IN_MINUTES)
+    const restOfMinutes = minutesAmount % Time.HOUR_IN_MINUTES
+
+    if (!restOfMinutes) return hours + `h`
+    if (!hours) return restOfMinutes + `m`
+
+    return `${hours}h ${restOfMinutes}m`
+}
 
 const parseMovieCard = (movie) => ({
     id: String(movie[`id`]),
@@ -23,14 +40,21 @@ const parseMovieCard = (movie) => ({
     },
 
     image: {
-        poster: RootPath.IMAGE + (movie[`poster_path`] || movie[`belongs_to_collection`][`poster_path`]),
-        background: RootPath.IMAGE + (movie[`backdrop_path`] || movie[`belongs_to_collection`][`backdrop_path`]),
+        poster: getImagePath(
+            movie[`poster_path`] ||
+            (movie[`belongs_to_collection`] ? movie[`belongs_to_collection`][`poster_path`] : null)
+        ),
+
+        background: getImagePath(
+            movie[`backdrop_path`] ||
+            (movie[`belongs_to_collection`] ? movie[`belongs_to_collection`][`backdrop_path`] : null)
+        ),
     },
     
     genreIds: movie[`genre_ids`] || movie[`genres`].map(genre => genre.id),
     genres: movie[`genres`] ? movie[`genres`].map(genre => genre.name) : null,
     status: movie[`status`] || null,
-    runtime: movie[`runtime`] || movie[`runtime`] === 0 ? `Not known` : null,
+    runtime: parseRuntime(movie[`runtime`]),
 })
 
 const parseMovies = (movies) => movies.map(parseMovieCard)

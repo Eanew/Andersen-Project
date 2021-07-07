@@ -34,29 +34,25 @@ const getQueryOptionsString = (options) => {
 }
 
 const load = {
-    movieById: ({ options, id }) => {
-        return fetch(`${RootPath.MOVIE}/${id}${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+    movieById: (parameters = {}) => fetch(
+        `${RootPath.MOVIE}/${parameters.id}` + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
             .then(response => response.json())
-            .then(data => parseMovieCard(data))
-    },
+            .then(data => parseMovieCard(data)),
     
-    moviesByCategory: ({ options, category = MovieCategory.POPULAR }) => {
-        return fetch(`${RootPath.MOVIE}/${category}${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+    moviesByCategory: (parameters = { category: MovieCategory.POPULAR }) => fetch(
+        `${RootPath.MOVIE}/${parameters.category}` + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
             .then(response => response.json())
-            .then(data => parseMovies(data.results))
-    },
+            .then(data => parseMovies(data.results)),
 
-    moviesByTitle: ({ options }) => {
-        return fetch(`${RootPath.SEARCH}/${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+    moviesByTitle: (parameters = {}) => fetch(
+        RootPath.SEARCH + getQueryOptionsString({ apiKey: API_KEY, query: parameters.title, ...parameters.options }))
             .then(response => response.json())
-            .then(data => parseMovies(data.results))
-    },
+            .then(data => parseMovies(data.results)),
 
-    genresList: ({ options }) => {
-        return fetch(`${RootPath.GENRE}/${getQueryOptionsString({ apiKey: API_KEY, ...options })}`)
+    genresList: (parameters = {}) => fetch(
+        RootPath.GENRE + getQueryOptionsString({ apiKey: API_KEY, ...parameters.options }))
             .then(response => response.json())
-            .then(data => parseGenres(data.genres))
-    },
+            .then(data => parseGenres(data.genres)),
 }
 
 export {
@@ -64,5 +60,3 @@ export {
     MovieCategory,
     load,
 }
-
-export default load
