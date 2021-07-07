@@ -1,4 +1,4 @@
-import { getImgPath } from "../api.js"
+import { RootPath } from "../api.js"
 
 const DATE_STRING_LANGUAGE = `en-US`
 
@@ -23,8 +23,8 @@ const parseMovieCard = (movie) => ({
     },
 
     image: {
-        poster: getImgPath(movie[`poster_path`] || movie[`belongs_to_collection`][`poster_path`]),
-        background: getImgPath(movie[`backdrop_path`] || movie[`belongs_to_collection`][`backdrop_path`]),
+        poster: RootPath.IMAGE + (movie[`poster_path`] || movie[`belongs_to_collection`][`poster_path`]),
+        background: RootPath.IMAGE + (movie[`backdrop_path`] || movie[`belongs_to_collection`][`backdrop_path`]),
     },
     
     genreIds: movie[`genre_ids`] || movie[`genres`].map(genre => genre.id),
@@ -35,12 +35,9 @@ const parseMovieCard = (movie) => ({
 
 const parseMovies = (movies) => movies.map(parseMovieCard)
 
-const getGenresByIds = (genresList, ids) => ids.map(id => genresList[id])
-
 export {
     parseMovieCard,
     parseMovies,
-    getGenresByIds,
 }
 
 /*
