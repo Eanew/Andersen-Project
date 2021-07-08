@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 //Components
 import InputSearch from "./../../Components/InputSearch/InputSearch";
 import Card from "./../../Components/Card/Card";
+import CardLayout from "../../Components/CardLayout/CardLayout";
 
 import { MovieCategory } from "../../api.js"
 import { Operation, OperationType as Type, Selector } from "../../reducers/data/slice.js"
@@ -27,18 +28,7 @@ function Main() {
 				<InputSearch />
 			</Container>
 
-			<Container>
-				<Row className="my-5">
-					{moviesByCategory && moviesByCategory.map((movie) => (
-						<Col key={movie.id} md={6} lg={4} xl={3} className="mb-4">
-							<Card
-								data={movie}
-								isFavorite={Boolean(Math.round(Math.random()))}
-							/>
-						</Col>
-					))}
-				</Row>
-			</Container>
+			<CardLayout cards={cards} />
 		</>
 	);
 }

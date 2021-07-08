@@ -1,6 +1,5 @@
 import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
-// import classNames from "classnames/bind";
 
 import { useHistory, withRouter } from "react-router-dom";
 
@@ -32,7 +31,9 @@ function Card({ data, isFavorite }) {
 
 			<div className={styles.card__contentWrapper}>
 				<h3 className={styles.card__moreTitle}>More info</h3>
-				<p className={styles.card__text}>{overview}</p>
+          <p className={styles.card__text}>
+            {overview.length > 150 ? overview.substring(0, 150) + "..." : overview}
+          </p>
 
 				<button
 					type="button"
