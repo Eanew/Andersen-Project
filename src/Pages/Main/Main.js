@@ -2,13 +2,11 @@ import "./Main.scss";
 
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-//Components
 import InputSearch from "./../../Components/InputSearch/InputSearch";
-import Card from "./../../Components/Card/Card";
 import CardLayout from "../../Components/CardLayout/CardLayout";
 
 import { MovieCategory } from "../../api.js"
@@ -28,7 +26,7 @@ function Main() {
 				<InputSearch />
 			</Container>
 
-			<CardLayout cards={cards} />
+			<CardLayout cards={moviesByCategory} />
 		</>
 	);
 }

@@ -1,19 +1,13 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-
-//Route
+import React from "react";
 import { Route } from "react-router-dom";
 
-//Components
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 
-// Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
-// Pages
 import Main from "./Pages/Main/Main";
 import Search from "./Pages/Search/Search";
 import Favorites from "./Pages/Favorites/Favorites";
@@ -31,7 +25,6 @@ function App() {
 
 			<main>
 				<Route path="/" exact component={Main} />
-				<Route path="/:category" exact component={Main} />
 				<Route path="/search" exact component={Search} />
 				<Route path="/search/:title" exact component={Search} />
 				<Route path="/film/:id" exact component={FilmInfo} />
@@ -39,7 +32,7 @@ function App() {
 				<Route path="/login" exact component={Login} />
 				<Route path="/favorites" exact component={Favorites} />
 				<Route path="/searchHistory" exact component={SearchHistory} />
-				{/* <Route path="/filmInfo" exact component={FilmInfo} /> */}
+				<Route path="/:category" exact component={Main} />
 			</main>
 
 			<Container>
