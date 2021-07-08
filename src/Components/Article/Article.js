@@ -5,6 +5,13 @@ function Article({ data }) {
 		title,
 		overview,
 		image,
+		// adult,
+		// release,
+		// originalLanguage,
+		// rating,
+		// genres,
+		// status,
+		// runtime,
 	} = data
 
 	return (

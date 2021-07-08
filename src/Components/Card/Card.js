@@ -10,6 +10,13 @@ function Card({ data, isFavorite }) {
 		title,
 		overview,
 		image,
+		// adult,
+		// release,
+		// originalLanguage,
+		// rating,
+		// genreIds,
+		// status,
+		// runtime,
 	} = data
 
 	return (
