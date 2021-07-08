@@ -7,9 +7,9 @@ function CardLayout({ cards }) {
 		<Container>
 			<Row className="my-5">
 				{cards && cards.map((card) => (
-					<Col key={cards.id} md={6} lg={4} xl={3} className="mb-4">
+					<Col key={card.id} md={6} lg={4} xl={3} className="mb-4">
 						<Card
-							data={cards}
+							data={card}
 							isFavorite={Boolean(Math.round(Math.random()))}
 						/>
 					</Col>
