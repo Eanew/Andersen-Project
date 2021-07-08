@@ -17,7 +17,10 @@ function Card(props) {
 
 			<div className={styles.card__contentWrapper}>
 				<h3 className={styles.card__moreTitle}>More info</h3>
-				<p className={styles.card__text}>{props.text}</p>
+				<p className={styles.card__text}>
+					{/* {props.text.length > 10 ? props.text.substring(0, 24) + "..." : props.text} */}
+					{props.text.length > 150 ? props.text.substring(0, 150) + "..." : props.text}
+				</p>
 
 				<button
 					type="button"
