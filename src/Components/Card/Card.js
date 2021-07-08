@@ -1,5 +1,4 @@
 import styles from "./Card.module.scss";
-import PropTypes from "prop-types";
 
 import { useHistory, withRouter } from "react-router-dom";
 
@@ -11,14 +10,6 @@ function Card({ data, isFavorite }) {
 		title,
 		overview,
 		image,
-		// adult,
-		// release,
-		// originalLanguage,
-		// rating,
-		// genreIds,
-		// genres,
-		// status,
-		// runtime,
 	} = data
 
 	return (
@@ -31,9 +22,7 @@ function Card({ data, isFavorite }) {
 
 			<div className={styles.card__contentWrapper}>
 				<h3 className={styles.card__moreTitle}>More info</h3>
-          <p className={styles.card__text}>
-            {overview.length > 150 ? overview.substring(0, 150) + "..." : overview}
-          </p>
+				<p className={styles.card__text}>{overview}</p>
 
 				<button
 					type="button"
@@ -96,14 +85,3 @@ c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.7
 }
 
 export default withRouter(Card);
-
-Card.propTypes = {
-	link: PropTypes.string,
-	imgPath: PropTypes.string,
-	title: PropTypes.string,
-	text: PropTypes.string,
-	buttonLink: PropTypes.string,
-	buttonText1: PropTypes.string,
-	buttonText2: PropTypes.string,
-	isFavorite: PropTypes.bool
-};
