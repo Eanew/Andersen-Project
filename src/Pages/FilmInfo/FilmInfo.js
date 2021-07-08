@@ -1,23 +1,28 @@
 import "./FilmInfo.scss";
 
-// Bootstrap
+import { Operation, OperationType as Type, Selector } from "../../reducers/data/slice.js"
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Article from "./../../Components/Article/Article";
 
-function FilmInfo(props) {
+function FilmInfo() {
+	const dispatch = useDispatch()
+	const movieById = useSelector(Selector.movieById)
+	const { id } = useParams()
+
+	useEffect(() => id && dispatch(Operation[Type.LOAD_MOVIE_BY_ID]({ id })), [id, dispatch])
+
 	return (
 		<>
 			<Container>
 				<Row>
 					<Col xs={12}>
-						<Article
-							img="http://vadimsib.ru/block_img/8.jpg"
-							title="Заголовок карточки"
-							text="Таким образом постоянный количественный рост и сфера нашей активности позволяет выполнять важные задания по разработке существенных финансовых и административных условий. Задача организации выполнена в полной мере."
-							genre="Для лохов"
-						/>
+						{movieById && <Article data={movieById} />}
 					</Col>
 				</Row>
 			</Container>
