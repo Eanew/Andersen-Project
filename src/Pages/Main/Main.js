@@ -3,45 +3,24 @@ import "./Main.scss";
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 //Components
 import InputSearch from "./../../Components/InputSearch/InputSearch";
 import Card from "./../../Components/Card/Card";
 
-const cards = [
-	{
-		id: 581726,
-		backdrop_path: "/xXHZeb1yhJvnSHPzZDqee0zfMb6.jpg",
-		title: "Заголовок карточки 1",
-		overview:
-			"Разнообразный и богатый опыт начало повседневной работы по формированию позиции в значительной степени обуславливает создание существенных финансовых и административных условий.",
-		release_date: "2021-09-08",
-		buttonLink: "#btn1",
-		isFavorite: false
-	},
-	{
-		id: 581727,
-		backdrop_path: "/xXHZeb1yhJvnSHPzZDqee0zfMb6.jpg",
-		title: "Заголовок карточки 1",
-		overview:
-			"Разнообразный и богатый опыт начало повседневной работы по формированию позиции в значительной степени обуславливает создание существенных финансовых и административных условий.",
-		release_date: "2021-09-08",
-		buttonLink: "#btn1",
-		isFavorite: false
-	},
-	{
-		id: 581728,
-		backdrop_path: "/xXHZeb1yhJvnSHPzZDqee0zfMb6.jpg",
-		title: "Заголовок карточки 1",
-		overview:
-			"Разнообразный и богатый опыт начало повседневной работы по формированию позиции в значительной степени обуславливает создание существенных финансовых и административных условий.",
-		release_date: "2021-09-08",
-		buttonLink: "#btn1",
-		isFavorite: false
-	}
-];
+import { MovieCategory } from "../../api.js"
+import { Operation, OperationType as Type, Selector } from "../../reducers/data/slice.js"
+import { useEffect } from "react";
 
-function Main(props) {
+function Main() {
+	const dispatch = useDispatch()
+	const moviesByCategory = useSelector(Selector.moviesByCategory)
+	const { category = MovieCategory.POPULAR } = useParams()
+
+	useEffect(() => dispatch(Operation[Type.LOAD_MOVIES_BY_CATEGORY]({ category })), [category, dispatch])
+
 	return (
 		<>
 			<Container>
@@ -50,15 +29,11 @@ function Main(props) {
 
 			<Container>
 				<Row className="my-5">
-					{cards.map((item, idx) => (
-						<Col md={6} lg={4} xl={3} className="mb-4">
+					{moviesByCategory && moviesByCategory.map((movie) => (
+						<Col key={movie.id} md={6} lg={4} xl={3} className="mb-4">
 							<Card
-								imgPath={"https://image.tmdb.org/t/p/original" + item.backdrop_path}
-								title={item.title}
-								text={item.overview}
-								buttonLink={item.buttonLink}
-								isFavorite={item.isFavorite}
-								id={item.id}
+								data={movie}
+								isFavorite={Boolean(Math.round(Math.random()))}
 							/>
 						</Col>
 					))}

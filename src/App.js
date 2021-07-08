@@ -31,13 +31,15 @@ function App() {
 
 			<main>
 				<Route path="/" exact component={Main} />
-				<Route path="/Search" exact component={Search} />
-				<Route path="/Favorites" exact component={Favorites} />
-				<Route path="/Login" exact component={Login} />
-				<Route path="/Auth" exact component={Auth} />
-				<Route path="/FilmInfo" exact component={FilmInfo} />
-				<Route path="/SearchHistory" exact component={SearchHistory} />
+				<Route path="/:category" exact component={Main} />
+				<Route path="/search" exact component={Search} />
+				<Route path="/search/:title" exact component={Search} />
 				<Route path="/film/:id" exact component={FilmInfo} />
+				<Route path="/auth" exact component={Auth} />
+				<Route path="/login" exact component={Login} />
+				<Route path="/favorites" exact component={Favorites} />
+				<Route path="/searchHistory" exact component={SearchHistory} />
+				{/* <Route path="/filmInfo" exact component={FilmInfo} /> */}
 			</main>
 
 			<Container>

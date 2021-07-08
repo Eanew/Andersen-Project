@@ -2,27 +2,42 @@ import styles from "./Card.module.scss";
 import PropTypes from "prop-types";
 // import classNames from "classnames/bind";
 
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
-function Card(props) {
-	let isFavorite = props.isFavorite;
+function Card({ data, isFavorite }) {
+	const history = useHistory()
+
+	const {
+		id,
+		title,
+		overview,
+		image,
+		// adult,
+		// release,
+		// originalLanguage,
+		// rating,
+		// genreIds,
+		// genres,
+		// status,
+		// runtime,
+	} = data
 
 	return (
 		<div className={styles.card}>
-			<h2 className={styles.card__title}>{props.title}</h2>
+			<h2 className={styles.card__title}>{title}</h2>
 
 			<div className={styles.card__img}>
-				<img src={props.imgPath} />
+				<img src={image.poster} alt={title} />
 			</div>
 
 			<div className={styles.card__contentWrapper}>
 				<h3 className={styles.card__moreTitle}>More info</h3>
-				<p className={styles.card__text}>{props.text}</p>
+				<p className={styles.card__text}>{overview}</p>
 
 				<button
 					type="button"
 					className={styles.card__btn}
-					onClick={() => props.history.push("film/" + props.id)}
+					onClick={() => history.push("film/" + id)}
 				>
 					Подробнее
 				</button>
